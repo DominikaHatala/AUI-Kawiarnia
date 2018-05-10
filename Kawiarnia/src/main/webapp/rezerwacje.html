@@ -1,0 +1,116 @@
+<!DOCTYPE HTML>
+<html lang="pl">
+<head>
+
+	<meta charset="utf-8" />
+        <?xml version="1.0"?>
+        <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+	<title>Kawiarnia "Mała Czarna"</title>
+	<link href="style.css" rel="stylesheet" type="text/css" />
+	<link href='http://fonts.googleapis.com/css?family=Lato:400,700&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+        <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	
+        
+
+        
+        
+</head>
+    
+    <style>
+        #reservations
+        {
+            margin-left: 680px;
+            text-align: center;
+        }
+        
+    </style>
+
+<body>
+	<div class="strona">
+		<div class="naglowek" >
+		
+		<a href="index.html"><img src="images/kawiarnia2.jpg" style="float:center;" /></a>
+		
+		</div>
+		<div class="menu">
+			<ol>
+				<li><a href="onas.html">O nas</a></li>
+				<li><a href="rezerwacje.html">Rezerwacje</a></li>
+				<li><a href="menu.html">Menu</a>
+					<ul>
+						<li><a href="#">Kawy</a></li>
+						<li><a href="#">Desery</a></li>
+						
+					</ul>
+				</li>
+				<li><a href="lokalizacja.html">Lokalizacja</a></li>
+				<li><a href="pogoda.html">Sprawdź pogodę</a>
+                <li><a href="dojazd.html">Dojazd</a>
+				</li>
+			</ol>
+		
+		</div>
+            
+</br></br>
+	    <div class ="rezerwacja" style=text-align:center;>
+             Zarezerwuj stolik:  
+             <form action="resources/reservations/save" method="post">
+            <input type="hidden" name="command" value="save_reservation"/>
+            <table>
+                <tr>
+                    <td><input type="text" name="numer" id="numer" placeholder="Numer rezerwacji" style=margin-left:670px;/></td>
+                </tr>
+                <tr>
+                    <td><input type="text" name="data" id="data" placeholder="Data" style=margin-left:670px;/></td>
+                </tr>
+                <tr>
+                    <td><input type="text" name="godzina" id="godzina" placeholder="Godzina" style=margin-left:670px;/></td>
+                </tr>
+            </table>
+            <input type="submit" value="Rezerwuj" onclick="update()"/>
+             </form>
+            </div>
+         <div style="float:center">
+             <h2 style=text-align:center;> Rezerwacje</h2>
+            <div id="reservations">
+            </div>
+           
+        </div>
+		<div class="stopka"> ZAPRASZAMY NA NAJLEPSZĄ KAWĘ W MIEŚCIE :) </div>
+	</div>
+	
+    
+		<script>
+            function loadReservations() {
+                $.getJSON('resources/reservations/list', function (data) {
+                    var table = $('<table>').appendTo($('#reservations'));
+                    $.each(data, function (i, book) {
+                        var row = $('<tr>').appendTo(table);
+                        $('<td>  ').text(book.numer).appendTo(row);
+                        $('<td>  ').text(book.data).appendTo(row);
+                        $('<td>  ').text(book.godzina).appendTo(row);
+     
+                    });
+                });
+            }   
+			
+            $(document).ready(function () {
+                loadReservations();
+            });
+        </script>
+    
+		<script>
+            function update() {
+                var reservationNumber = $('#numer').val();
+                if (reservationNumber !== null) {
+                    $.getJSON('resources/reservations/find', {'numer': reservationNumber}, function (data) {
+                        $('#reservation_number').val(data.numer);
+                        $('#reservation_date').val(data.data);
+                        $('#reservation_hour').val(data.godzina);
+                    });
+                }
+            }
+
+        </script>
+</body>
+</html>

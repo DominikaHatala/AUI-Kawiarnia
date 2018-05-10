@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<html lang="pl">
+<head>
+
+	<meta charset="utf-8" />
+	<title>Kawiarnia "Mała Czarna"</title>
+	<link href="style.css" rel="stylesheet" type="text/css" />
+	<link href='http://fonts.googleapis.com/css?family=Lato:400,700&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+        
+        
+	 <script type="text/javascript">
+	 
+	    var openWeatherMapApi = {
+                url: 'http://api.openweathermap.org/data/2.5/forecast',
+                key: '2508abecb6d9037229e719a6adc445af',
+                img: 'http://openweathermap.org/img/w/'
+            }
+		
+		function wczytajPogode(miejscowosc, dni) {
+                dni = (dni > 10) ? 10 : ((dni < 1) ? 1 : dni);
+                var url = openWeatherMapApi.url + "?APPID=" + openWeatherMapApi.key + "&units=metric&q=" + miejscowosc;
+                $.getJSON(url, function(data) {
+                    console.log(data); 
+  
+                    $('#pogoda #prognoza').html('');
+                    for(var i = 0; i < dni; i++) {
+                        var prognoza = data.list[i];
+                        var tekst = (i == 0) ? 'Dzisiaj' : ((i == 1) ? 'Jutro' : 'Za ' + i + ' dni');
+                        var img = openWeatherMapApi.img + prognoza.weather[0].icon + '.png';
+                        $('#pogoda #prognoza').append('<div class="prognoza">' + tekst + '<br/><img id="grafika" src="' + img + '" /><br/>Temperatura: ' + prognoza.main.temp + '&deg;C<br/>Wiatr: ' + prognoza.wind.speed + 'km/h</div>');
+                    }
+                });
+            }
+		
+	 </script>
+	<script type="text/javascript">
+          $(document).on('change', 'input[name="miejscowosc"]', function() {
+              var miejscowosc = $(this).val();
+              var dni = $('input[name="dni"]').val();
+              wczytajPogode(miejscowosc, dni);
+          });
+          $(document).on('change', 'input[name="dni"]', function() {
+              var miejscowosc = $('input[name="miejscowosc"]').val();
+              var dni = $(this).val();
+              wczytajPogode(miejscowosc, dni);
+          });
+      </script>
+	
+	
+</head>
+
+<body>
+	<div class="strona">
+	
+		
+	
+		<div class="naglowek" >
+		
+		<a href="index.html"><img src="images/kawiarnia2.jpg" style="float:center;" /></a>
+		
+		</div>
+		
+		
+		<div class="menu">
+			<ol>
+				<li><a href="onas.html">O nas</a></li>
+				<li><a href="rezerwacje.html">Rezerwacje</a></li>
+				<li><a href="menu.html">Menu</a>
+					<ul>
+						<li><a href="#">Kawy</a></li>
+						<li><a href="#">Desery</a></li>
+						
+					</ul>
+				</li>
+				<li><a href="lokalizacja.html">Lokalizacja</a></li>
+				<li><a href="pogoda.html">Sprawdź pogodę</a>
+                                <li><a href="dojazd.html">Dojazd</a>
+				</li>
+			</ol>
+		
+		</div>
+		
+		</br></br>
+		
+			<h2 style=margin-left:500px; > Spradź pogodę zanim nas odwiedzisz</h2>  
+                <input type="text" name="miejscowosc" placeholder="Miejscowość" style=margin-left:630px;/>
+                <input type="number" min="1" max="10" name="dni" placeholder="Dni" style=margin-left:20px;/>
+
+                <div id="pogoda">
+                   
+                    <div id="prognoza">
+                    </div>
+                </div>
+		
+		
+		<div class="stopka"> ZAPRASZAMY NA NAJLEPSZĄ KAWĘ W MIEŚCIE :) </div>
+	</div>
+	
+</body>
+</html>

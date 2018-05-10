@@ -1,0 +1,3 @@
+resources\BookResource.class
+entities\Book.class
+servlet\BooksContext.class

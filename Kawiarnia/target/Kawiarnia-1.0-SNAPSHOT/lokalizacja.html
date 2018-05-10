@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html lang="pl">
+<head>
+
+	<meta charset="utf-8" />
+	<title>Kawiarnia "Mała Czarna"</title>
+	<link href="style.css" rel="stylesheet" type="text/css" />
+	<link href='http://fonts.googleapis.com/css?family=Lato:400,700&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhmPjY-ZprtwhP-cDFUvx-cenG6tt30wE"> </script>
+	<script type='text/javascript'>  
+		function mapaStart()   
+		{   
+			var opcjeMapy = {  
+			center: new google.maps.LatLng(53.594579, 19.56521),
+			zoom: 17,
+			};
+			
+			var map = new google.maps.Map(document.getElementById("mapka"), opcjeMapy);
+
+			var marker = new google.maps.Marker(
+			{
+				position:  new google.maps.LatLng(53.594579, 19.56521),
+				map: map,
+				title: "Kawiarnia",
+			});
+
+			var infowindow = new google.maps.InfoWindow({content: "Kawiarnia 'Mała Czarna'"});
+
+			marker.addListener('click', function() 
+			{
+			infowindow.open(map, marker);
+			});
+		}
+   
+		google.maps.event.addDomListener(window, 'load', mapaStart);
+		
+	</script>  
+
+
+</head>
+
+<body onload="mapaStart()">
+
+	<div class="strona">
+
+		<div class="naglowek" >
+		
+		<a href="index.html"><img src="images/kawiarnia2.jpg" style="float:center;" /></a>
+		 
+		</div>
+
+		<div class="menu">
+			<ol>
+			    <li><a href="onas.html">O nas</a></li>
+				<li><a href="rezerwacje.html">Rezerwacje</a></li>
+				<li><a href="menu.html">Menu</a>
+					<ul>
+						<li><a href="#">Kawy</a></li>
+						<li><a href="#">Desery</a></li>
+						
+					</ul>
+				</li>
+				<li><a href="lokalizacja.html">Lokalizacja</a></li>
+                                <li><a href="pogoda.html">Sprawdź pogodę</a></li>
+                                <li><a href="dojazd.html">Dojazd</a></li>
+			</ol>
+		
+		
+		</div>
+		</br></br></br>
+		<div id="mapka" style="width: 700px; height: 500px; border: 1px solid black;">
+	    </div>
+		</br></br>
+		
+		
+		<div class="stopka"> ZAPRASZAMY NA NAJLEPSZĄ KAWĘ W MIEŚCIE :) </div>
+	</div>
+	
+	
+</body>
+</html>
